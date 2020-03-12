@@ -42,17 +42,17 @@ new_player = Player(
 game = True
 
 while game:
-	print("Welcome to Heartbreak Cave!")
+    print("Welcome to Heartbreak Cave!")
     # Waits for user input and decides what to do.
-	coordinate = input(
-        'Where to, Marine? [n] North, [e] East, [s] South, [w] West, or [q] Give up!   ')
+    coordinate = input(
+        "Where to, Marine? [n] North, [e] East, [s] South, [w] West, or [q] Give up!   ")
     # If the user enters a cardinal direction, attempt to move to the room there.
-	if coordinate in ['n', 'e', 's', 'w']:
-        new_player.switch_rooms(coordinate)
+    if coordinate in ['n', 'e', 's', 'w']:
+        new_player.move(coordinate)
     # If the user enters "q", quit the game.
-	elif coordinate == 'q':
+    elif coordinate == 'q':
         print("Many have tried and failed. Better luck next time!")
         game = False
-	# If the user enters an invalid key stroke.
+    # If the user enters an invalid key stroke.
     else:
         print("Lost? Try again you piece of amphibian slime!")
