@@ -11,9 +11,9 @@ class Player:
         room = getattr(self.current_room, f'{coordinate}_to')
         # Print an error message if the movement isn't allowed.
         if room is None:
-            print("As you were, Marine. Access denied! Pick a different direction.")
+            print('As you were, Marine. Access denied! Pick a different direction.\n')
         # Prints the current room name and description.
         elif room is not None:
             self.current_room = room
-            print(f'{self.name} has entered the', self.current_room.name)
-            print(self.current_room.description)
+            print(f'{self.name} has entered the {self.current_room.name}\n')
+            print(f'{self.current_room.description}\n')
