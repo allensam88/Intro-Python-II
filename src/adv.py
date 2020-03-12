@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -33,67 +34,25 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-
-def show_welcome_message():
-    welcome_message = "Welcome to the Cave of Despair!"
-    print(welcome_message)
-
-# Prints the current room name
-# Prints the current description (the textwrap module might be useful here).
-
-
-def current_room(player, room):
-    print(f"{player.name} has entered the {room.name}. {room.description}")
-
-
-# Waits for user input and decides what to do.
-def get_user_input():
-    choice = input(
-        "Pick a direction: [n] North  [e] East  [s] South  [w] West  [q] Give up now!\n")
-    return choice_options[choice]
-
-# If the user enters a cardinal direction, attempt to move to the room there.
-
-
-def switch_rooms():
-    pass
-
-# If the user enters "q", quit the game.
-
-
-def quit_game():
-    print("Lost? Many have tried and failed!  Better luck next time.")
-
-# Print an error message if the movement isn't allowed.
-
-
-def error():
-    pass
-
-
 # Make a new player object that is currently in the 'outside' room.
-new_player = {
-    "name": "Bilbo",
-    "current_room": 'outside'
-}
+new_player = Player(
+    "Senior Drill Instructor Gunnery Sergeant Hartmann", room['outside'])
 
-choice_options = {
-    "n": "North",
-    "e": "East",
-    "s": "South",
-    "w": "West",
-    "q": "Give up now!"
-}
+# Initialize the game to begin with True (False to quit)
+game = True
 
-# Start of Game
-show_welcome_message()
-
-# Starting choice
-user_input = get_user_input()
-
-while user_input != "q":
-    current_room(new_player, current_room)
-    user_input = get_user_input()
-
-# Quit game if user exits game loop
-quit_game()
+while game:
+	print("Welcome to Heartbreak Cave!")
+    # Waits for user input and decides what to do.
+	coordinate = input(
+        'Where to, Marine? [n] North, [e] East, [s] South, [w] West, or [q] Give up!   ')
+    # If the user enters a cardinal direction, attempt to move to the room there.
+	if coordinate in ['n', 'e', 's', 'w']:
+        new_player.switch_rooms(coordinate)
+    # If the user enters "q", quit the game.
+	elif coordinate == 'q':
+        print("Many have tried and failed. Better luck next time!")
+        game = False
+	# If the user enters an invalid key stroke.
+    else:
+        print("Lost? Try again you piece of amphibian slime!")
