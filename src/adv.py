@@ -37,8 +37,7 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Initialize new player object that is currently in the 'outside' room.
-new_player = Player(
-    'Senior Drill Instructor Gunnery Sergeant Hartmann', room['outside'])
+
 
 # Initialize items
 
@@ -63,6 +62,7 @@ room['treasure'].items = [item['skull'], item['mushroom']]
 game = True
 # Opening message
 print('\n***** WELCOME TO HEARTBREAK CAVE... ENTER AT YOUR OWN RISK! *****\n')
+new_player = Player(input('Enter player name: '), room['outside'])
 print('-----------------------------------------------------------------\n')
 print(f"Location: {room['outside'].name}\n")
 print(f"{room['outside'].description}\n")

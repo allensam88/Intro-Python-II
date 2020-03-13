@@ -18,9 +18,9 @@ class Room:
         else:
             print('You see the following item(s):')
             for item in self.items:
-                print(f'{item.name}, {item.description}\n')
-                print(
-                    '-----------------------------------------------------------------\n')
+                print(f'{item.name}, {item.description}')
+            print(
+                '\n-----------------------------------------------------------------\n')
             print(
                 'Do you wish to pick up an item? type: [grab] [item_name]')
             print('Do you wish to discard an item? type: [drop] [item_name]')
