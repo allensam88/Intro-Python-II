@@ -43,14 +43,14 @@ new_player = Player(
 # Initialize items
 
 item = {
-    'garbage': Item("garbage", "a steaming pile of hot garbage."),
+    'garbage': Item("garbage", "a steaming hot pile."),
     'bayonet': Item("bayonet", "a long, sharp bayonet, but with no rifle..."),
     'rifle': Item("rifle", "an M-16 A2 service rifle."),
-    'grenade': Item("grenade", "a grenade, is it live or a dud?"),
-    'trap': Item("trap", "tripwire. Watch yourself, it's a booby trap."),
+    'grenade': Item("grenade", "is it live or a dud?"),
+    'trap': Item("tripwire", "watch yourself, it's a booby trap."),
     'boot': Item("boot", "a single left boot, size 9."),
-    'skull': Item("skull", "a dried cracked skull. Many have been here before..."),
-    'mushroom': Item("mushroom", "a mushroom. Does it possess magical powers?")
+    'skull': Item("skull", "a dried cracked skull, many have been here before..."),
+    'mushroom': Item("mushroom", "does it possess magical powers?")
 }
 # Link items to rooms
 room['outside'].items.append(item['garbage'])
@@ -62,17 +62,18 @@ room['treasure'].items = [item['skull'], item['mushroom']]
 # Initialize the game to begin with True (False to quit)
 game = True
 # Opening message
-print('\nWelcome to Heartbreak Cave... Enter at your own risk!\n')
-print(room['outside'].name)
-print(room['outside'].description)
-for item in room['outside'].items:
-    print(f'You see {item.description}')
+print('\n***** WELCOME TO HEARTBREAK CAVE... ENTER AT YOUR OWN RISK! *****\n')
+print('-----------------------------------------------------------------\n')
+print(f"Location: {room['outside'].name}\n")
+print(f"{room['outside'].description}\n")
+room['outside'].display_items()
 
 while game:
     os.system('cls')
     print(
-        'Where next, Marine? [n] North, [e] East, [s] South, [w] West, or [q] Give up!')
-    command = input('Enter command: ')
+        'Where to next, Marine? [n] North, [e] East, [s] South, [w] West')
+    print('(or press [q] to GIVE UP!)\n')
+    command = input('Enter command ~~> ')
     if command in ['n', 'e', 's', 'w']:
         new_player.move(command)
     elif command.startswith('grab'):
@@ -84,7 +85,7 @@ while game:
     elif command == 'i':
         new_player.display_inventory()
     elif command == 'q':
-        print('Many have tried and failed. Better luck next time!\n')
+        print('\nMany have tried and failed. Better luck next time!\n')
         game = False
     else:
         print('Lost? Try again you piece of amphibian slime!\n')

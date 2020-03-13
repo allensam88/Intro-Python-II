@@ -16,6 +16,7 @@ class Player:
         # Prints the current room name and description.
         elif room is not None:
             self.current_room = room
+            print('-----------------------------------------------------------------\n')
             print(f'{self.name} has entered the {self.current_room.name}\n')
             print(f'{self.current_room.description}\n')
             self.current_room.display_items()
@@ -35,12 +36,14 @@ class Player:
                 self.inventory.remove(item)
                 self.current_room.items.append(item)
                 print(
-                    f'You dropped {item.name} in the {self.current_room.name}.')
+                    f'You dropped {item.name} in the {self.current_room.name}.\n')
             else:
                 print('You do not have that item.\n')
 
     def display_inventory(self):
-        print("\nYour rucksack has: ")
-        for item in self.inventory:
-            print(item.name)
-            print('')
+        if len(self.inventory) == 0:
+            print('Your rucksack is currently empty.\n')
+        else:
+            print("\nYour rucksack has: ")
+            for item in self.inventory:
+                print(item.name)

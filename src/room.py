@@ -14,10 +14,14 @@ class Room:
 
     def display_items(self):
         if len(self.items) == 0:
-            print('There are no items here.')
+            print('There are no items here.\n')
         else:
-            print('You see here:')
+            print('You see the following item(s):')
             for item in self.items:
-                print(item.name, item.description)
+                print(f'{item.name}, {item.description}\n')
+                print(
+                    '-----------------------------------------------------------------\n')
             print(
                 'Do you wish to pick up an item? type: [grab] [item_name]')
+            print('Do you wish to discard an item? type: [drop] [item_name]')
+            print('(press [i] to view rucksack inventory)\n')
