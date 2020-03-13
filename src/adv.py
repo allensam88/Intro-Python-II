@@ -1,5 +1,7 @@
+import os
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,27 +36,55 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-# Make a new player object that is currently in the 'outside' room.
+# Initialize new player object that is currently in the 'outside' room.
 new_player = Player(
     'Senior Drill Instructor Gunnery Sergeant Hartmann', room['outside'])
 
+# Initialize items
+
+item = {
+    'garbage': Item("garbage", "a steaming pile of hot garbage."),
+    'bayonet': Item("bayonet", "a long, sharp bayonet, but with no rifle..."),
+    'rifle': Item("rifle", "an M-16 A2 service rifle."),
+    'grenade': Item("grenade", "a grenade, is it live or a dud?"),
+    'trap': Item("trap", "tripwire. Watch yourself, it's a booby trap."),
+    'boot': Item("boot", "a single left boot, size 9."),
+    'skull': Item("skull", "a dried cracked skull. Many have been here before..."),
+    'mushroom': Item("mushroom", "a mushroom. Does it possess magical powers?")
+}
+# Link items to rooms
+room['outside'].items.append(item['garbage'])
+room['foyer'].items.append(item['bayonet'])
+room['overlook'].items = [item['rifle'], item['grenade']]
+room['narrow'].items = [item['trap'], item['boot']]
+room['treasure'].items = [item['skull'], item['mushroom']]
+
 # Initialize the game to begin with True (False to quit)
 game = True
-
+# Opening message
 print('\nWelcome to Heartbreak Cave... Enter at your own risk!\n')
+print(room['outside'].name)
+print(room['outside'].description)
+for item in room['outside'].items:
+    print(f'You see {item.description}')
 
 while game:
-    # Waits for user input and decides what to do.
+    os.system('cls')
     print(
-        'Where to, Marine? [n] North, [e] East, [s] South, [w] West, or [q] Give up!')
-    coordinate = input('Enter coordinate: ')
-    # If the user enters a cardinal direction, attempt to move to the room there.
-    if coordinate in ['n', 'e', 's', 'w']:
-        new_player.move(coordinate)
-    # If the user enters "q", quit the game.
-    elif coordinate == 'q':
+        'Where next, Marine? [n] North, [e] East, [s] South, [w] West, or [q] Give up!')
+    command = input('Enter command: ')
+    if command in ['n', 'e', 's', 'w']:
+        new_player.move(command)
+    elif command.startswith('grab'):
+        item = command.split(' ')[1]
+        new_player.grab_item(item)
+    elif command.startswith('drop'):
+        item = command.split(' ')[1]
+        new_player.drop_item(item)
+    elif command == 'i':
+        new_player.display_inventory()
+    elif command == 'q':
         print('Many have tried and failed. Better luck next time!\n')
         game = False
-    # If the user enters an invalid key stroke.
     else:
         print('Lost? Try again you piece of amphibian slime!\n')
