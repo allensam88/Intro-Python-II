@@ -1,4 +1,7 @@
+import os
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -33,19 +36,56 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+# Initialize new player object that is currently in the 'outside' room.
 
-# Make a new player object that is currently in the 'outside' room.
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+# Initialize items
+
+item = {
+    'garbage': Item("garbage", "a steaming hot pile."),
+    'bayonet': Item("bayonet", "a long, sharp bayonet, but with no rifle..."),
+    'rifle': Item("rifle", "an M-16 A2 service rifle."),
+    'grenade': Item("grenade", "is it live or a dud?"),
+    'trap': Item("tripwire", "watch yourself, it's a booby trap."),
+    'boot': Item("boot", "a single left boot, size 9."),
+    'skull': Item("skull", "a dried cracked skull, many have been here before..."),
+    'mushroom': Item("mushroom", "does it possess magical powers?")
+}
+# Link items to rooms
+room['outside'].items.append(item['garbage'])
+room['foyer'].items.append(item['bayonet'])
+room['overlook'].items = [item['rifle'], item['grenade']]
+room['narrow'].items = [item['trap'], item['boot']]
+room['treasure'].items = [item['skull'], item['mushroom']]
+
+# Initialize the game to begin with True (False to quit)
+game = True
+# Opening message
+print('\n***** WELCOME TO HEARTBREAK CAVE... ENTER AT YOUR OWN RISK! *****\n')
+new_player = Player(input('Enter player name: '), room['outside'])
+print('-----------------------------------------------------------------\n')
+print(f"Location: {room['outside'].name}\n")
+print(f"{room['outside'].description}\n")
+room['outside'].display_items()
+
+while game:
+    os.system('cls')
+    print(
+        'Where to next, Marine? [n] North, [e] East, [s] South, [w] West')
+    print('(or press [q] to GIVE UP!)\n')
+    command = input('Enter command ~~> ')
+    if command in ['n', 'e', 's', 'w']:
+        new_player.move(command)
+    elif command.startswith('grab'):
+        item = command.split(' ')[1]
+        new_player.grab_item(item)
+    elif command.startswith('drop'):
+        item = command.split(' ')[1]
+        new_player.drop_item(item)
+    elif command == 'i':
+        new_player.display_inventory()
+    elif command == 'q':
+        print('\nMany have tried and failed. Better luck next time!\n')
+        game = False
+    else:
+        print('Lost? Try again you piece of amphibian slime!\n')
